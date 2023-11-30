@@ -53,10 +53,6 @@ jobs:
         name: Prod
         url: todoappdevelopment.azurewebsites.net
       steps:
-        - name: Download a Build Artifact
-          uses: actions/download-artifact@v3.0.0
-          with:
-            name: to-do-artifact
         - name: Deploy production
           uses: Azure/webapps-deploy@v3.0.0
           with:
