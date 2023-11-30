@@ -26,7 +26,7 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3.1.3
         with:
-          name: todo-artifact
+          name: to-do-artifact
           path: .  
 
   deploy-dev:
@@ -37,7 +37,7 @@ jobs:
       url: todoappdevelopment.azurewebsites.net
     steps:
       - name: Download a Build Artifact
-        uses: actions/download-artifact@v3.0.0
+        uses: actions/download-artifact@v2.1.1
         with:
           name: to-do-artifact
       - name: Deploy development
@@ -53,6 +53,10 @@ jobs:
         name: Prod
         url: todoappdevelopment.azurewebsites.net
       steps:
+        - name: Download a Build Artifact
+          uses: actions/download-artifact@v2.1.1
+          with:
+            name: to-do-artifact
         - name: Deploy production
           uses: Azure/webapps-deploy@v3.0.0
           with:
