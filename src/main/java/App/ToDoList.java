@@ -35,4 +35,9 @@ public class ToDoList {
         }
     }
 
+    public void clearTasks() {
+        tasks.clear();
+        System.out.println("All tasks cleared.");
+    }
+
 }
