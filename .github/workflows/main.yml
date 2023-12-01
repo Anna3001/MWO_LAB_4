@@ -26,17 +26,41 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v3.1.3
         with:
-          name: todo-artifact
+          name: to-do-artifact
           path: .  
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    needs: publish
+    environment:
+      name: Dev
+      url: todoappdevelopment.azurewebsites.net
+    steps:
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v2.1.1
+        with:
+          name: to-do-artifact
       - name: Deploy development
         uses: Azure/webapps-deploy@v3.0.0
         with:
            app-name: 'todoappDEVELOPMENT'
            publish-profile: ${{ secrets.AZURE_DEVELOPMENT }}
-      - name: Deploy production
-        uses: Azure/webapps-deploy@v3.0.0
-        with:
-           app-name: 'todoappPRODUCTION'
-           publish-profile: ${{ secrets.AZURE_PRODUCTION }}
+           
+  deploy-prod:
+      runs-on: ubuntu-latest
+      needs: publish
+      environment:
+        name: Prod
+        url: todoappdevelopment.azurewebsites.net
+      steps:
+        - name: Download a Build Artifact
+          uses: actions/download-artifact@v2.1.1
+          with:
+            name: to-do-artifact
+        - name: Deploy production
+          uses: Azure/webapps-deploy@v3.0.0
+          with:
+             app-name: 'todoappPRODUCTION'
+             publish-profile: ${{ secrets.AZURE_PRODUCTION }}      
 
 
